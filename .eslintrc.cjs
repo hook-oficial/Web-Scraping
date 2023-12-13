@@ -14,9 +14,14 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-<<<<<<< HEAD
     '@typescript-eslint/no-explicit-any': 'off', // Permitir el uso de 'any'
-=======
->>>>>>> d62f0d2b67e7ad1df5be6b33d85e33393739a3ec
   },
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+  ],
 }
