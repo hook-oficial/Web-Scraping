@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from './components/home/Home';
-import DefaultTemplate from "./components/template/default/DefaultTemplate";
+import Test from './components/template/default/TableDefault';
 
 function App() {
   
@@ -12,7 +12,7 @@ function App() {
   
         <Route path="/" element={<Home />} />
   
-        <Route path="/default-template" element={<DefaultTemplate />} />
+        <Route path="/default-template" element={<Test />} />
 
       </Routes>
   

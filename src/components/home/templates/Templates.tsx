@@ -1,4 +1,4 @@
-import { templates } from "../../../consts/constTemplates";
+import { templates } from "../../../constants/constTemplates";
 
 function Templates() {
     return (

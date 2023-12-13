@@ -19,4 +19,4 @@ export default function getVideoArray(videoHtmlSelector: NodeList){
         }
       });
       return turnUniqueObjArray(arrayVideos, 'title');
-}
+};

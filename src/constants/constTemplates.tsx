@@ -5,7 +5,7 @@ export const templates = [
         "":""
     },
     {
-        "title": "Wikpedia",
+        "title": "Wikipedia",
         "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt nihil repudiandae alias voluptate amet optio, cumque voluptatem consequuntur doloribus."
     },
     {
