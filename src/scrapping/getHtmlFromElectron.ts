@@ -7,5 +7,5 @@ export default function getHtmlFromElectron(){
       const videoResult = html.querySelectorAll('.ytd-rich-item-renderer');
       const arrayVideos = getVideoArray(videoResult);
       console.log(arrayVideos);
-    })
-}
+    });
+};

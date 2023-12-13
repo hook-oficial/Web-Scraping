@@ -20,6 +20,5 @@ export default function extractHTMLFromWeb(window: BrowserWindow, url: string) {
         const html = await extractOnlyHTML(pupperWindow.webContents);
         window?.webContents.send('html-result', html);
         pupperWindow.close();
-    })
-}
-
+    });
+};
