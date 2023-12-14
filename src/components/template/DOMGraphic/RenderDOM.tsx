@@ -3,9 +3,10 @@ import TreeBranch from "./TreeBranch";
 import {useState, useEffect} from 'react';
 
 interface Props {
-    DOM: Document
+    DOM: Document,
+    loadJsonDomToInput: (dom: ReactNodeStructure[])=>void
 }
-function RenderDOM({ DOM }: Props) {
+function RenderDOM({ DOM, loadJsonDomToInput }: Props) {
     const [jsonDom, setJsonDom] = useState<ReactNodeStructure[]>([]);
     const [currentJsonDom, setcurrentJsonDom] = useState<ReactNodeStructure[]>();
     const mapDOM=()=>{
@@ -16,6 +17,7 @@ function RenderDOM({ DOM }: Props) {
         };
         setJsonDom([prevDomData]);
         setcurrentJsonDom([prevDomData]);
+        loadJsonDomToInput([prevDomData]);
     };
     useEffect(() => {
         mapDOM();
@@ -25,7 +27,7 @@ function RenderDOM({ DOM }: Props) {
     const findChildrens=(element: Element)=>{
         if(!currentJsonDom) return;
         jsonDom.forEach(dom=>{
-            const currentJsonFind = findElementInJson(dom, element);
+            const currentJsonFind = findElementInJson((elementCb)=>  element === elementCb, dom);
             if(currentJsonFind){
                 setcurrentJsonDom([currentJsonFind]);
             }

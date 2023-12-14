@@ -2,11 +2,13 @@ import { ChangeEvent, useState, useEffect } from 'react';
 import { useDOM } from '../../store/useDOM';
 import { extractDataFromElement } from '../../scrapping/extractDataFromElement';
 import specialSelectors from '../../consts/specialSelectors';
+import { findElementInJson } from '../../scrapping/buildDOM/recursiveChildren';
 
 interface Props {
     getSelectorResult: () => Element[] | [] | NodeList;
+    jsonDom: ReactNodeStructure[]
 }
-function InputSelector({ getSelectorResult }: Props) {
+function InputSelector({ getSelectorResult, jsonDom }: Props) {
     const { DOM, copySelectorText, webSiteData } = useDOM();
     const [selectorValue, setSelectorValue] = useState('');
 
@@ -28,7 +30,27 @@ function InputSelector({ getSelectorResult }: Props) {
     
         const parts = selector.split(/\s+/);
         const specialSelector = parts[parts.length - 1];
-    
+        const checkRegexIsText = /^".*"$/;
+
+        if(checkRegexIsText.test(selector)){
+            for(const dom of jsonDom){
+                const selectorClean = selector?.match(/^"(.*?)"$/)?.[1];
+                if(!selectorClean) return null;
+                const findElement = findElementInJson((e)=> {
+                    const textContent = e.textContent?.replace(/\s+/g, ' ')?.trim()?.toLowerCase();
+                    return textContent === selectorClean;
+                }, dom);
+                if(!findElement) return null;
+                const {parent, element} = findElement;
+                console.log(findElement)
+                const regex = /\s*[^ ]*:[^ ]*\s*|\S*\[.*?\]\S*|\S*\[.*?\]/g;
+                const classNameToUse = element.className.replace(regex, '');
+                const selectorResult = `${parent?.tagName} ${element.tagName}${classNameToUse.trim() ? "." + classNameToUse.split(' ').join('.') : ''}`;
+                console.log(selectorResult)
+                return !validateSelector(selectorResult) ? null : selectorResult
+            }
+        }
+
         if (parts.length > 1 && specialSelectorsKeys[specialSelector]) {
             const parentSelectors = parts.slice(0, -1).join(' ');
             if (specialSelectorsKeys[specialSelector].includes(',')) {

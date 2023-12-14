@@ -21,7 +21,7 @@ const extractHTMLData = async (webContents: WebContents) => {
 };
 
 export default function extractHTMLFromWeb(window: BrowserWindow, url: string) {
-    const pupperWindow = new BrowserWindow({ show: true});
+    const pupperWindow = new BrowserWindow({ show: false});
     pupperWindow.loadURL(url);
     pupperWindow.webContents.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3';
     pupperWindow.webContents.on('did-finish-load', async () => {

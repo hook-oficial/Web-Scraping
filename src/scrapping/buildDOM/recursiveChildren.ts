@@ -11,13 +11,13 @@ export function recursiveChildren(element: Element, parent?: Element | null): Re
     return childStructure;
 }
 
-export function findElementInJson(root: ReactNodeStructure, element: Element): ReactNodeStructure | null {
-  if (root.element === element) {
+export function findElementInJson(callBack: ElementCallback, root: ReactNodeStructure): ReactNodeStructure | null {
+  if (callBack(root.element)) {
       return root;
     }
   
     for (const child of root.childrens) {
-      const foundElement = findElementInJson(child, element);
+      const foundElement = findElementInJson(callBack, child);
       if (foundElement) {
         return foundElement;
       }

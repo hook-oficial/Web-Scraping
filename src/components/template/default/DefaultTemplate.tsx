@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import RenderDOM from "../DOMGraphic/RenderDOM";
 import { useDOM } from "../../../store/useDOM";
 import InputSelector from "../InputSelector";
-import {useEffect} from 'react';
+import { useState } from "react";
 
 function DefaultTemplate() {
   const {DOM, webSiteData} = useDOM();
+  const [jsonDom, setJsonDom] = useState<ReactNodeStructure[]>([]);
+  
   return (
     <div className="flex justify-center flex-col items-center"> 
         { DOM && 
@@ -15,11 +17,11 @@ function DefaultTemplate() {
             <img className="rounded-full" src={webSiteData.logo} width='50' alt={`${webSiteData.title} logo`} />        
           </div></> )
         }
-        {DOM ? <RenderDOM DOM={DOM}/> : <p className="m-5 font-bold">"We're loading the your website elements..."</p>}
+        {DOM ? <RenderDOM DOM={DOM} loadJsonDomToInput={setJsonDom}/> : <p className="m-5 font-bold">"We're loading the your website elements..."</p>}
         <div className="flex">
           <Link className="bg-violet-600 rounded-md p-3 px-6 font-bold mt-8" to="/">Go Back</Link>
         </div>     
-        <InputSelector/>
+        <InputSelector jsonDom={jsonDom}/>
     </div>
   );
 }

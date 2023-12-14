@@ -7,3 +7,5 @@ interface ReactNodeStructure {
 interface WebSiteData {
   title:string, description:string, logo:string, URL_href:string
 }
+
+type ElementCallback = (element: Element) => boolean
