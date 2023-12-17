@@ -1,30 +1,13 @@
-import { useDOM } from "../../../store/useDOM";
-import {MouseEvent} from 'react';
-
+import useTreeBranch from "../../../hooks/useTreeBranch";
 interface Props {
     dom: ReactNodeStructure,
     indexParent: number,
     findChildrens: (el: Element) => void
 }
 function TreeBranch({ dom, indexParent, findChildrens }: Props) {
-    const { setCopySelectorText } = useDOM();
     const key = `${dom.element.tagName}-${Math.random() * indexParent}`;
     const { childrens, parent } = dom;
-
-    const getNodeText = (node: Element | null) => {
-        if (!node) return {tagName: '', className: '', id:''};
-        const { tagName, className, id } = node;
-        const classNameNoSpace = className && typeof className == 'string' ?  className.replace(/\s/g, '.') : '';
-        const classNameToUse = classNameNoSpace.replace(/\.[^.\s]*:[^.\s]*/g, '');
-        const allSelector = `${node.parentElement?.tagName.toLowerCase()} ${tagName}${className ? '.' + classNameToUse : ''}${id ? '#' + id : ''}`
-        return {
-            tagName,
-            className: className ? '.' + classNameToUse : '',
-            id: id ? '#' + id : '',
-            allSelector
-        }
-    }
-
+    const {getNodeText, handleClickChild} = useTreeBranch();
     const createNodeText = (node: Element | null) => {
         if (node) {
             const { tagName, className, id } = getNodeText(node);
@@ -37,10 +20,6 @@ function TreeBranch({ dom, indexParent, findChildrens }: Props) {
             );
         }
     }
-    const handleClickChild = (e: MouseEvent<HTMLHeadingElement>) => (selector:string) => {
-        e.preventDefault();
-        setCopySelectorText(selector);
-    };
 
     const nodeClasses = 'rounded-lg bg-gray-800 text-white p-4 font-medium text-center break-words';
     return (

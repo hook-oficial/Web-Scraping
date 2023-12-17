@@ -2,12 +2,16 @@ import { Link} from "react-router-dom";
 import RenderDOM from "../DOMGraphic/RenderDOM";
 import { useDOM } from "../../../store/useDOM";
 import InputSelector from "../InputSelector";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function DefaultTemplate() {
   const {DOM, webSiteData} = useDOM();
   const [jsonDom, setJsonDom] = useState<ReactNodeStructure[]>([]);
-  
+  const [arrResult, setArrResult] = useState<ArrNodesResult>([]);
+  useEffect(() => { 
+      console.log(arrResult)
+    
+  }, [arrResult]);
   return (
     <div className="flex justify-center flex-col items-center"> 
         { DOM && 
@@ -21,7 +25,7 @@ function DefaultTemplate() {
         <div className="flex">
           <Link className="bg-violet-600 rounded-md p-3 px-6 font-bold mt-8" to="/">Go Back</Link>
         </div>     
-        <InputSelector jsonDom={jsonDom}/>
+        <InputSelector getSelectorResult={setArrResult} jsonDom={jsonDom}/>
     </div>
   );
 }
